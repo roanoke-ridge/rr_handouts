@@ -5,7 +5,7 @@ This resource allows you to pay all players in your server a set amount at a set
 
 ## Configuration
 The config resides in `shared/config.lua`  
-Strings can be changed in 
+Strings can be changed in `locales/*.json`
 
 ## Dependencies
 - [VORP Core](https://github.com/VORPCORE/vorp_core-lua)
