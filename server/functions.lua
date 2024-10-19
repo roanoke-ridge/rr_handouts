@@ -44,7 +44,7 @@ function ResourceStartHandler(resourceName)
     for _, player in pairs(GetPlayers()) do
       -- Create thread here in case someone's still on character select when restarting the resource live
       CreateThread(function()
-        repeat Wait(1000) until Player(player).state.IsInSession
+        while not Player(player).stateIsInSession do Wait(1000) end
         StartPayTimer(player)
       end)
     end
