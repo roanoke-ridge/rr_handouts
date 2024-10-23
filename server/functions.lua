@@ -5,7 +5,8 @@ local timers = {}
 
 function StartPayTimer(player)
   local payTimer = lib.timer(Config.PaymentInterval * 60 * 1000, function() Pay(player) end, true)
-  timers[tostring(player)] = payTimer -- tostring(player) because player id 1 will make the lua interpreter think that it's an array index
+  timers[tostring(player)] =
+      payTimer -- tostring(player) because player id 1 will make the lua interpreter think that it's an array index
 end
 
 function Pay(player)
@@ -28,9 +29,18 @@ function StopPayTimer(player)
   end
 end
 
-function PlayerJoiningHandler()
-  local src = source
-  repeat Wait(1000) until Player(src).state.IsInSession
+function JobChangeHandler(source, newjob, oldjob)
+  if not Config.OnlyUnemployed then return end
+
+  if newjob == "unemployed" then
+    StartPayTimer(source)
+  elseif timers[tostring(source)] then
+    StopPayTimer(source)
+  end
+end
+
+function SelectedCharacterHandler(src, character)
+  if Config.OnlyUnemployed and character.job ~= "unemployed" then return end
   StartPayTimer(src)
 end
 
@@ -42,11 +52,8 @@ end
 function ResourceStartHandler(resourceName)
   if resourceName == GetCurrentResourceName() then
     for _, player in pairs(GetPlayers()) do
-      -- Create thread here in case someone's still on character select when restarting the resource live
-      CreateThread(function()
-        repeat Wait(1000) until Player(player).state.IsInSession
-        StartPayTimer(player)
-      end)
+      if not Player(player).state.IsInSession then break end
+      StartPayTimer(player)
     end
   end
 end
