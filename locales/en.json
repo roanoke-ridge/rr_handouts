@@ -1,4 +1,4 @@
 {
-  "received_payment": "You've received $%.2f",
-  "log_payment": "%s has received $%.2f"
+  "received_payment": "You've received %s",
+  "log_payment": "%s has received %s"
 }
