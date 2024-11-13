@@ -27,10 +27,12 @@ function Pay(player)
   local character = user.getUsedCharacter
   character.addCurrency(Config.PaymentCurrency, Config.PaymentAmount)
 
-  Core.NotifyRightTip(player, locale("received_payment", money), 4000)
+  if Config.NotifyPlayer then
+    Core.NotifyRightTip(player, locale("received_payment", money), 4000)
+  end
   local fullName = string.format("%s %s", character.firstname, character.lastname)
   Config.Log(locale("log_payment", fullName, money))
-
+  
   timers[tostring(player)]:restart()
 end
 

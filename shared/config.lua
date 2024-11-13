@@ -6,6 +6,10 @@ Config = {
   -- Set this to true if you want to pay only unemployed players instead of everyone
   OnlyUnemployed = false,
 
+  -- true = player receives notification and prints to server console 
+  -- false = prints only to server console.
+  NotifyPlayer = true, 
+
   -- Set this to true if you want to pay players only when they are alive
   PauseDuringDeath = false,
   
