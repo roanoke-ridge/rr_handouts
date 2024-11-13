@@ -27,9 +27,12 @@ function Pay(player)
   local character = user.getUsedCharacter
   character.addCurrency(Config.PaymentCurrency, Config.PaymentAmount)
 
-  Core.NotifyRightTip(player, locale("received_payment", money), 4000)
-  local fullName = string.format("%s %s", character.firstname, character.lastname)
-  Config.Log(locale("log_payment", fullName, money))
+  -- Core.NotifyRightTip(player, locale("received_payment", money), 4000) -- COYOTE NOTE: removes notification for player
+  -- local fullName = string.format("%s %s", character.firstname, character.lastname) -- COYOTE NOTE: moved to below
+  -- Config.Log(locale("log_payment", fullName, money))  -- COYOTE NOTE: removed to avoid double printing on server console
+
+  local fullName = string.format("%s %s", character.firstname, character.lastname) -- COYOTE NOTE: this prints to server console
+  print(fullName .. " has received " .. money) -- COYOTE NOTE: this prints to server console
 
   timers[tostring(player)]:restart()
 end
